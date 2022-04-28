@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Avanthi</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+  <style type="text/css">
+    * {
+      margin: 0;
+    }
+
+    body {
+      font-family: 'Poppins';
+    }
+
+    #title {
+      text-align: center;
+      margin: 20px 0px 20px 0px;
+      color: linear-gradient(100.41deg, #0CA7FE 13.75%, #766DED 39.34%, #D03BDE 77.11%, #FA25D8 101.76%);
+    }
+
+    #studentDetails {
+      border-collapse: collapse;
+      /*text-align: center;*/2
+      width: 100%;
+    }
+
+    #studentDetails td, #studentDetails th {
+      border: none;
+      padding: 20px 100px 20px 100px;
+    }
+
+    #studentDetails th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      /*text-alig2n: left;*/
+      background-color: #04AA6D;
+      color: white;
+    }
+
+    #q {
+      font-weight: bolder;
+    }
+
+    #searchBar {
+      margin: 20px 0px 20px 0px;
+      outline: none;
+      width: 29%;
+      border: none;
+      padding: 10px;
+    }
+    
+
+    /* Extra small devices (phones, 600px and down) */
+    @media only screen and (max-width: 600px) {
+    }
+
+    /* Small devices (portrait tablets and large phones, 600px and up) */
+    @media only screen and (min-width: 600px) {
+    }
+
+    /* Medium devices (landscape tablets, 768px and up) */
+    @media only screen and (min-width: 768px) {
+    }
+
+    /* Large devices (laptops/desktops, 992px and up) */
+    @media only screen and (min-width: 992px) {
+    }
+
+    /* Extra large devices (large laptops and desktops, 1200px and up) */
+    @media only screen and (min-width: 1200px) {
+    }
+
+  </style>
+</head>
+<body>
+
+
+  <h2 style="font-weight: 900;" id="title">Student Details</h2>
+
+  <center>
+    <input id="searchBar" type="text" name="search" placeholder="Search student by ID">
+    <button 
+      style="border: none;padding:10px;font-weight: bolder;color: white;background-color: #3071EE;border-radius: 2px;padding: 8px 20px 8px 20px;" onclick="getValue()">
+        search
+    </button>
+  </center>
+
+
+  <center>
+  <table id="studentDetails">
+    <tr>
+      <td id="q">Name</td>
+      <td id="studentName">Ruthvik Bemidi</td>
+    </tr>
+    <tr>
+      <td id="q">ID</td>
+      <td id="studentID">20Q61A6603</td>
+    </tr>
+    <tr>
+      <td id="q">Date of Birth</td>
+      <td id="studentDOB">2003-06-12</td>
+    </tr>
+    <tr>
+      <td id="q">Branch</td>
+      <td id="studentBranch">CSM</td>
+    </tr>
+    <tr>
+      <td id="q">Email</td>
+      <td id="studentEmail">ruthvik4215@gmail.com</td>
+    </tr>
+    <tr>
+      <td id="q">Mobile Number</td>
+      <td id="studentMobileNumber">8978897687</td>
+    </tr>
+    <tr>
+      <td id="q">Aadhaar Number</td>
+      <td id="studentAadhaar">275589540151</td>
+    </tr>
+  </table>
+  </center>
+
+
+
+  <script>
+    async function getValue() {
+
+      try {
+
+        //getting the ID from search bar
+        const value = document.querySelector('input').value;
+
+        //calling API Endpoint with id entered by the user
+        const endpoint = await fetch(`http://127.0.0.1:5000/student/${value}`);
+        var data = await endpoint.json();
+
+        // checking status of the code
+        if(!endpoint.ok) {
+
+          //throws an error if there is an problem with API.
+          throw new Error(`Student details not found ${endpoint.status}`);
+
+        } else {
+
+          //logging the response data from the API call.
+          console.log(data);
+
+          //changing the data using id
+          document.getElementById('studentName').innerHTML = (data.name == undefined) ? "Student not foudn." : data.name;
+          document.getElementById('studentID').innerHTML = data.id;
+          document.getElementById('studentDOB').innerHTML = data.DOB;
+          document.getElementById('studentBranch').innerHTML = data.branch;
+          document.getElementById('studentEmail').innerHTML = data.email;
+          document.getElementById('studentMobileNumber').innerHTML = data.mobileNumber;
+          document.getElementById('studentAadhaar').innerHTML = data.Aadhaar;
+
+        }
+
+      } catch(e) {
+        //loggin the erros in console.
+        console.log(e);
+      }
+
+    }
+  </script>
+
+</body>
+</html>
