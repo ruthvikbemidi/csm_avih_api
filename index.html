@@ -132,7 +132,7 @@
         const value = document.querySelector('input').value;
 
         //calling API Endpoint with id entered by the user
-        const endpoint = await fetch(`http://127.0.0.1:5000/student/${value}`);
+        const endpoint = await fetch(`https://ruthvikbemidi.pythonanywhere.com/student/${value}`);
         var data = await endpoint.json();
 
         // checking status of the code
